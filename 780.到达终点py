@@ -1,0 +1,17 @@
+
+
+class Solution:
+    def reachingPoints(self, sx: int, sy: int, tx: int, ty: int) -> bool:
+        def check(sx,sy):
+            if sx > tx or sy > ty:
+                return False
+            if sx == tx and tx == ty:
+                return True
+            if sx < tx or sy <= ty:
+                return check(sx+sy,sy) or check(sx,sx+sy)
+
+        return check(sx,sy)
+
+
+print(Solution().reachingPoints(1,1,3,5))
+
