@@ -7,8 +7,12 @@
 # #     def multi(self,x,y):
 # #         a,b, res,i  = abs(x),abs(y),0,0
 # from math import gcd
-# #
-# #
+
+
+
+
+
+
 # # def printAllFolds(N):
 # #     def printProcess(i, N, isDown):
 # #         if i > N:
@@ -88,5 +92,30 @@
 # res = [[1,2],[3,4],[5,6]]
 # for i in map(sum,res):
 #     print(i)
-print(ord('a'))
+# a = [3,8,1,2,0,9,4,5,7,6]
+# print(sorted(enumerate(a),key=lambda x:x[1]))
+# a = {1,2,3,4,5,6}
+# print({7} | a)
+# def permute(nums):
+#     n = len(nums)
+#     dp = [[[nums[0]]]] + [[] for _ in range(n - 1)]
+#     print(dp)
+#     for i in range(1, n):
+#         for pmt in dp[i-1]:
+#             for j in range(i + 1):
+#                 dp[i].append(pmt[:j] + [nums[i]] + pmt[j:])
+#     return dp[n-1]
+# print(permute([0,1,2,3]))
 
+
+
+n = 15
+a = []
+while n:
+            lb = n & -n
+            a.append(lb)
+            n ^= lb
+print(a)
+print(bin(14))
+print(bin(-14))
+print(bin(14 & -14))

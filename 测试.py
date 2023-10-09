@@ -104,8 +104,9 @@
 # root.mainloop()
 import bisect
 import math
-from collections import Counter, deque
+from collections import Counter, deque, defaultdict
 from itertools import product
+from typing import List
 
 
 # s = "12345"
@@ -381,5 +382,74 @@ def generate(s_):
 # print(s)
 # print(bisect.bisect_right(s,"11"))
 
-data = [[1,0,0,1],[0,1,1,0]]
-print(sum(sum(t)for t in data))
+# data = [[1,0,0,1],[0,1,1,0]]
+# print(sum(sum(t)for t in data))
+# from typing import List
+# class Solution:
+#     def prisonAfterNDays(self, cells: List[int], n: int) -> List[int]:
+#         def get_next(s):
+#             return [int(i > 0 and i < 7 and s[i-1] == s[i+1]) for i in range(8)]
+#         used = {}
+#         while n > 0:
+#             c = tuple(cells)
+#             if c in used:
+#                 n %= (used[c]-n)
+#             used[c] = n
+#             if n > 0:
+#                 n -=1
+#                 cells = get_next(cells)
+#         return cells
+#
+# cells = [0,1,0,1,1,0,0,1]
+# n = 7
+# print(Solution().prisonAfterNDays(cells,n))
+#
+#
+# nums = [20,46,15,39]
+# nums1 = sorted(nums)
+# d = defaultdict(int)
+# for i in range(len(nums1)):
+#     d[nums1[i]] = i
+# flag = [False] * len(nums)
+# res = 0
+# for i in range(len(nums)):
+#     if not flag[i]:
+#         j = i
+#         while not flag[j]:
+#             flag[j] = True
+#             j = d[nums[j]]
+#         res += 1
+# print(len(nums)-res)
+
+# nums = [1,2,3,4,5]
+# print("".join(nums))
+
+class Solution:
+    def pathsWithMaxScore(self, board: List[str]) -> List[int]:
+        n = len(board)
+        dp = [[[-1, 0]] * n for _ in range(n)]
+        dp[n - 1][n - 1] = [0, 1]
+
+        def update(x, y, u, v):
+            if u >= n or v >= n or dp[u][v][0] == -1:
+                return
+            if dp[u][v][0] > dp[x][y][0]:
+                dp[x][y] = dp[u][v][:]
+            elif dp[u][v][0] == dp[x][y][0]:
+                dp[x][y][1] += dp[u][v][1]
+
+        for i in range(n - 1, -1, -1):
+            for j in range(n - 1, -1, -1):
+                if not (i == n - 1 and j == n - 1) and board[i][j] != "X":
+                    update(i, j, i + 1, j)
+                    update(i, j, i, j + 1)
+                    update(i, j, i + 1, j + 1)
+                    if dp[i][j][0] != -1:
+                        dp[i][j][0] += (0 if board[i][j] == "E" else ord(board[i][j]) - 48)
+        print(dp)
+        return [dp[0][0][0], dp[0][0][1] % (10**9 + 7)] if dp[0][0][0] != -1 else [0, 0]
+
+# board = ["E12",
+#          "1X1",
+#          "21S"]
+# print(Solution().pathsWithMaxScore(board))

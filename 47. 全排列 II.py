@@ -16,5 +16,6 @@ class Solution:
         dfs(0)
         return res
 
-nums = [1, 2, 1]
+nums = [1, 2, 3, 4]
 print(Solution().permuteUnique(nums))
+

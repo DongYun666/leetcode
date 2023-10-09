@@ -28,26 +28,40 @@ class Solution(object):
     #     return flag1 or flag2
 
     #改进：
-        def checkIfCanBreak(self, s1, s2):
-            ch_count1,ch_count2 = [0]*26,[0]*26
-            for ch in s1:
-                ch_count1[ord(ch)-ord('a')]+=1
-            for ch in s2:
-                ch_count2[ord(ch)-ord('a')]+=1
-            flag =0
-            for i in range(25,-1,-1):
-                if ch_count1[i] == ch_count2[i]:
-                    continue
-                if ch_count1[i]>ch_count2[i]:
-                    if flag == 2:
-                        return False
-                    flag = 1
-                    ch_count1[i - 1] += ch_count1[i] - ch_count2[i]
-                else:
-                    if flag == 1:
-                        return False
-                    flag = 2
-                    ch_count2[i - 1] += ch_count2[i] - ch_count1[i]
-            return True
+    def checkIfCanBreak(self, s1, s2):
+        ch_count1,ch_count2 = [0]*26,[0]*26
+        for ch in s1:
+            ch_count1[ord(ch)-ord('a')]+=1
+        for ch in s2:
+            ch_count2[ord(ch)-ord('a')]+=1
+        flag =0
+        for i in range(25,-1,-1):
+            if ch_count1[i] == ch_count2[i]:
+                continue
+            if ch_count1[i]>ch_count2[i]:
+                if flag == 2:
+                    return False
+                flag = 1
+                ch_count1[i - 1] += ch_count1[i] - ch_count2[i]
+            else:
+                if flag == 1:
+                    return False
+                flag = 2
+                ch_count2[i - 1] += ch_count2[i] - ch_count1[i]
+        return True
+        
+    def checkIfCanBreak1(self, s1, s2):
+        s1 = list(s1)
+        s2 = list(s2)
+        s1.sort()
+        s2.sort()
+        greater,less = 0,0
+        for i in range(len(s1)):
+            if s1[i] > s2[i]:
+                greater += 1
+            elif s1[i] < s2[i]:
+                less += 1
+        return greater == 0 or less == 0
 
-print(Solution().checkIfCanBreak("abc","xya"))
+
+print(Solution().checkIfCanBreak("abe","acd"))
